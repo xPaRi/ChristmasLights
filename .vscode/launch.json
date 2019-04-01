@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "type": "lua",
+            "request": "launch",
+            "name": "Test A",
+            "path": "${workspaceFolder}/test2/NeoPixel.lua;${workspaceFolder}/test2/StarList.lua;",
+            "program": "${workspaceFolder}/test2/test_a.lua"
+        },
+        {
+            "type": "lua",
+            "request": "launch",
+            "name": "Test B",
+            "path": "${workspaceFolder}/test2/NeoPixel.lua;${workspaceFolder}/test2/StarList.lua;",
+            "program": "${workspaceFolder}/test2/test_b.lua"
+        }
+    ]
+}
