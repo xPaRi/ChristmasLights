@@ -18,6 +18,13 @@
             "name": "Test B",
             "path": "${workspaceFolder}/test2/NeoPixel.lua;${workspaceFolder}/test2/StarList.lua;",
             "program": "${workspaceFolder}/test2/test_b.lua"
-        }
+        },
+        {
+            "type": "lua",
+            "request": "launch",
+            "name": "Test C",
+            "path": "${workspaceFolder}/test2/NeoPixel.lua;${workspaceFolder}/test2/StarList.lua;",
+            "program": "${workspaceFolder}/test2/test_c.lua"
+        },
     ]
 }
