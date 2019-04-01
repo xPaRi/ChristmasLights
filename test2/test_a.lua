@@ -12,6 +12,11 @@ StarList_mt =
         self[index] = {["Index"] = index, ["Name"] = "Nazev "..index}
     end,
 
+    go = function(self, index)
+        self[index]["Name"] = self[index]["Name"] .. "xxxx"
+    end,
+
+
     item = function(self, index)
         return index.."xx"
     end,
@@ -38,11 +43,9 @@ print("Func calling... ")
 
 
 for i=1, STAR_COUNT, 1 do
-    print(StarList[i].Name)
-    print(StarList[i])
-
-    --local item = StarList[i]
-    --print("--- " .. i .. " ---")
+    print(StarList[i].Index .. " " .. StarList[i].Name)
+    StarList:go(i)
+    print(StarList[i].Index .. " " .. StarList[i].Name)
 end
 
 
