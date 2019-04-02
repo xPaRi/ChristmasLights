@@ -23,7 +23,7 @@
             "type": "lua",
             "request": "launch",
             "name": "Test C",
-            "path": "${workspaceFolder}/test2/NeoPixel.lua;${workspaceFolder}/test2/StarList.lua;",
+            "path": "${workspaceFolder}/?.lua",
             "program": "${workspaceFolder}/test2/test_c.lua"
         },
     ]
