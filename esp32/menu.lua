@@ -6,7 +6,7 @@
 function InitDisplay()
     -- Inicializace
     gdisplay.attach(gdisplay.SSD1306_128_64, gdisplay.LANDSCAPE_FLIP, true, 0x3C)
-	gdisplay.on()
+    gdisplay.on()
     gdisplay.clear()
     gdisplay.settransp(false) -- co je za textem bude prepsano
 
