@@ -2,6 +2,12 @@
 return
 
 #y::
-Send dofile("chl.lua"){enter}
+Send dofile("menu.lua"){enter}
 return
+
+f12::
+Send exit{enter}
+Sleep 1000
+Send +{insert}
+
 

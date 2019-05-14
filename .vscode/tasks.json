@@ -10,7 +10,7 @@
             "command": "wcc.exe",
             "options": 
             {
-                "env": {"ESP_PORT":"COM5"}
+                "env": {"ESP_PORT":"COM7"}
             },
             "args": ["-p", "${env:ESP_PORT}", "-up", "${file}", "${fileBasename}"],
             "presentation": {"echo": true, "reveal": "never", "focus": false, "panel": "shared"},
