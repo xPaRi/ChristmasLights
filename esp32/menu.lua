@@ -3,8 +3,8 @@
 -- Struktura menu se definuje jako pole
 -- -----------------------------------------
 
+-- Inicializace displeje
 function InitDisplay()
-    -- Inicializace
     gdisplay.attach(gdisplay.SSD1306_128_64, gdisplay.LANDSCAPE_FLIP, true, 0x3C)
     gdisplay.on()
     gdisplay.clear()
@@ -13,6 +13,9 @@ function InitDisplay()
     gdisplay.setfont(gdisplay.FONT_DEFAULT)    
 end
 
+-- Obsluha presunuti na vybranou pozici
+-- Manipuluje se zde s pozici stranky menu atd...
+-- <pos> - pozice aktualne vybraneho radku
 function Move(pos)
     -- Aby pos nevypadl z rámce
     if (pos < 1) then
@@ -45,11 +48,14 @@ function Move(pos)
     LastPos = pos;
 end
 
-function PrintRow(row, isEmpty)
+-- Zobrazi jeden radek menu
+-- <row>        - index zobrazovaneho radku
+-- <isSelected> - indikuje zvyraznene zobrazeni (vybrana polozka menu)
+function PrintRow(row, isSelected)
     -- Barvy podle 'isEmpty'
     local colorText, colorBack = gdisplay.WHITE, gdisplay.BLACK
 
-    if (isEmpty) then
+    if (isSelected) then
         colorText, colorBack = gdisplay.BLACK, gdisplay.WHITE
     end
     --
@@ -65,6 +71,9 @@ function PrintRow(row, isEmpty)
     gdisplay.write({VALUE_X, absY  }, MenuList[row].Value)
 end
 
+-- Zobrazi menu
+-- <reverse> - zacne zobrazovani odspodu
+-- <pos>     - na teto pozicci bude zobrazen ukazatel (vybrana polozka menu)
 function PrintMenu(reverse, pos)
     local from, to, step = PageTop, PageEnd, 1
 
@@ -78,6 +87,9 @@ function PrintMenu(reverse, pos)
 end
 
 -- Obsluha rotacniho enkoderu s vazbou na menu
+-- <dir>        - smer otaceni
+-- <counter>    - pozice ankoderu
+-- <button>     - stisk tlacitka
 function callback(dir, counter, button)
     Move(CursorPos + dir);
 end
