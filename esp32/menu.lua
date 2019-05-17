@@ -86,15 +86,8 @@ function PrintMenu(reverse, pos)
     end
 end
 
--- Obsluha rotacniho enkoderu s vazbou na menu
--- <dir>        - smer otaceni
--- <counter>    - pozice ankoderu
--- <button>     - stisk tlacitka
-function callback(dir, counter, button)
-    Move(CursorPos + dir);
-end
-
 -- Vraci delku pole
+-- <array>  - zkoumane pole
 function ArrayLength(array)
     local result = 0
 
@@ -105,10 +98,71 @@ function ArrayLength(array)
     return result
 end
 
+-- Vraci index hodnoty v poli nebo nil
+-- <array> - zkoumane pole
+-- <value> - hledana hodnota
+function GetIndexOfValue(array, value)
+    for k, item in ipairs(array) do 
+        if (item==value) then
+            return k
+        end
+    end
+
+    return nil
+end
+
+function GetPrevValue(array, value)
+    local i = GetIndexOfValue(array, value)
+
+    if (i == nil or i <= 1) then
+        return array[1]
+    else
+        return array[i-1]
+    end
+end
+
+function GetNextValue(array, value)
+    local i = GetIndexOfValue(array, value)
+    local aLength = ArrayLength(array)
+
+    if (i == nil or i >= aLength) then
+        return array[aLength]
+    else
+        return array[i+1]
+    end
+end
+
+function SetValue(menuItem, dir)
+    if (dir < 0) then 
+        menuItem.Value = GetPrevValue(menuItem.Values, menuItem.Value)
+    elseif (dir > 0) then
+        menuItem.Value = GetNextValue(menuItem.Values, menuItem.Value)
+    end
+
+    PrintRow(CursorPos, true)
+end
+
+-- Obsluha rotacniho enkoderu s vazbou na menu
+-- <dir>        - smer otaceni
+-- <counter>    - pozice ankoderu
+-- <button>     - stisk tlacitka
+function callback(dir, counter, button)
+    if button==1 then
+        IsSetValue = not IsSetValue 
+    end
+
+    if IsSetValue then
+        SetValue(MenuList[CursorPos], dir)
+    else
+        Move(CursorPos + dir);
+    end
+end
+
+
 MenuList = 
 { 
-    { Text="1.Modul",  Value="Nahodna",    Type=1, Values={1,2,3,4,5,6}},
-    { Text="2.Speed",  Value=  1,          Type=1, Values={1,2,3,4,5,6}},
+    { Text="1.Modul",  Value="A1",         Type=1, Values={"--", "A1", "B1", "C1", "D1", "E1", "F1"}},
+    { Text="2.Speed",  Value= 60,          Type=1, Values={10,20,30,40,50,60,70,80,90,100}},
     { Text="3.Random", Value= 10,          Type=1, Values={1,2,3,4,5,6}},
     { Text="4.Red",    Value=100,          Type=1, Values={1,2,3,4,5,6}},
     { Text="5.Green",  Value=  2,          Type=1, Values={1,2,3,4,5,6}},
@@ -136,6 +190,7 @@ PageTop = 1;
 PageHeight = 4;
 PageEnd = PageTop + PageHeight - 1;
 
+IsSetValue = false
 
 -- Zahajujeme
 InitDisplay()
