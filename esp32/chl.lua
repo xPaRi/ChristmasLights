@@ -42,3 +42,7 @@ thread.start(function() Go(StarList_2) end)
 --
 
 print("Cajk!")
+
+
+STAR_COUNT_1 = 20 -- Pocet hvezd
+NeoPixel_1 = neopixel.attach(neopixel.WS2812B, pio.GPIO15, STAR_COUNT_1)
