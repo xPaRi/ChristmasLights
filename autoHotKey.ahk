@@ -3,7 +3,7 @@ Run C:\WApp\Putty\putty.exe -load "ESP32" ;Win+T
 return
 
 #y::
-Send dofile("menu.lua"){enter}
+Send dofile("chl.lua"){enter}
 return
 
 f12::

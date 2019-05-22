@@ -181,7 +181,7 @@ m.SetValue = function (menuItem, dir)
 
     -- ValueChange (pokud menu obsahuje ValueChange, spustime jej pri kazde zmene hodnoty)
     if menuItem.ValueChange ~= nil then
-        menuItem.ValueChange(m.GetCurrentValue(), menuItem.SelIndex)
+        menuItem.ValueChange(menuItem.SelIndex, m.GetCurrentValue())
     end
     --
 
@@ -200,7 +200,7 @@ m.EncoderCallback = function (dir, counter, button)
         menuItem = m.MenuList[m.CursorPos]
 
         if menuItem.ValueChanged ~= nil then
-            menuItem.ValueChanged(m.GetCurrentValue(), menuItem.SelIndex)
+            menuItem.ValueChanged(menuItem.SelIndex, m.GetCurrentValue())
         end
         --
     elseif (button==1 and m.IsSetValue==false) then
@@ -225,6 +225,10 @@ m.SetValuesCount = function (menuList)
     end
 end
 
+-- 
+m.Refresh()
+end
+
 -- Inicializace celeho menu
 -- <gpioA>      - A vyvod enkoderu
 -- <gpioB>      - B vyvod enkoderu
@@ -243,43 +247,4 @@ m.Init = function(gpioA, gpioB, gpioSW, menuList)
     enc = encoder.attach(gpioA, gpioB, gpioSW, m.EncoderCallback)
 end
 
-MenuList = 
-{ 
-    { Text="1.Modul",  SelIndex=1, Values={"--", "A1", "B1", "C1", "D1", "E1", "F1"},
-        ValueChange  = function(a,b) print("ValueChange  [value, index]:",a,b) end,
-        ValueChanged = function(a,b) print("ValueChanged [value, index]:",a,b) end
-    },
-    { Text="2.Speed",  SelIndex=1, Values={10,20,30,40,50,60,70,80,90,100}},
-    { Text="3.Random", SelIndex=1, Values={1,2,3,4,5,6}},
-    { Text="4.Red",    SelIndex=1, Values={1,2,3,4,5,6}},
-    { Text="5.Green",  SelIndex=1, Values={1,2,3,4,5,6}},
-    { Text="6.Black",  SelIndex=1, Values={1,2,3,4,5,6}},
-    { Text="7.White",  SelIndex=1, Values={1,2,3,4,5,6}},
-    { Text="8.Yellow", SelIndex=1, Values={1,2,3,4,5,6}},
-    { Text="9.Santin", SelIndex=1, Values={1,2,3,4,5,6}}
-}
-
-mm = m
-mm.Init(pio.GPIO34, pio.GPIO35, pio.GPIO32, MenuList)
-
---
-
--- https://www.gammon.com.au/scripts/doc.php?lua=f:lines
--- f=io.input("eff_1.lua")
--- it=f:lines()
--- for i in it do print (i) end
--- f:close()
-
--- for line in io.lines ("eff_1.lua") do
---     print (line)
--- end 
-
--- for fi in io.lines ("lib/lua") do
---     print (fi)
--- end 
--- for i, key in ipairs(fi) do print (i) end
-
--- print(table.)
--- dir = io.open("lib/lua")
--- for i in pairs(io.open("lib/lua")) do print (i) end
-
+return m
