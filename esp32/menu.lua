@@ -3,6 +3,25 @@
 -- Struktura menu se definuje jako pole
 -- -----------------------------------------
 
+-- CONFIG_LUA_RTOS_I2C0_SCL=15
+-- CONFIG_LUA_RTOS_I2C0_SDA=4
+-- pin16 to high
+-- https://randomnerdtutorials.com/solved-failed-to-connect-to-esp32-timed-out-waiting-for-packet-header/
+
+PrintTable(i2c[7])
+
+function PrintTable(tab)
+    for key, item in ipairs(tab) do
+        print(key, item)
+    end
+end
+
+function pg(tab)
+    for n in pairs(tab) do
+        print(n)
+    end
+end
+
 function InitDisplay()
     -- Inicializace
     gdisplay.attach(gdisplay.SSD1306_128_64, gdisplay.LANDSCAPE_FLIP, true, 0x3C)

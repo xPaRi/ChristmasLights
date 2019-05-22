@@ -10,4 +10,8 @@ Send exit{enter}
 Sleep 1000
 Send +{insert}
 
-
+#f7::
+Send {f7}
+FormatTime, TimeString,, yyyy-MM-dd 
+SendInput, %TimeString%{space}
+return
