@@ -97,3 +97,14 @@ print("Cajk!")
 -- dir = io.open("lib/lua")
 -- for i in pairs(io.open("lib/lua")) do print (i) end
 
+-- -- Get the file named src-filename.lua
+--net.scp.get(host, port, src, dst, user, password)
+--Transfers the file src from the remote host to the Lua device's file system with the name dst.
+--net.scp.get("remotehost",22,"~/lua/src-filename.lua","/examples/lua/dst-filename.lua","username","secretpass")
+
+net.wf.setup(net.wf.mode.STA, "IDEA-HOST", "ideahost123*")
+net.wf.start(false)
+net.stat()
+net.scp.get("idea-envi.cz",21,"~/wwwroot/pari/mon.css","/mon.css","idea-envi","")
+
+res, header, body = net.curl.get("http://www.idea-envi.cz/pari/", "mon.css")
