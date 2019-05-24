@@ -103,8 +103,15 @@ print("Cajk!")
 --net.scp.get("remotehost",22,"~/lua/src-filename.lua","/examples/lua/dst-filename.lua","username","secretpass")
 
 net.wf.setup(net.wf.mode.STA, "IDEA-HOST", "ideahost123*")
+net.wf.setup(net.wf.mode.STA, "IDEA1", "qweasd-123")
 net.wf.start(false)
 net.stat()
+net.ping("10.5.73.113")
+net.scp.get("10.5.73.113",22,"/test.txt","/test.txt","esp32","esp32")
+net.scp.get("10.5.73.113",22,"test.txt","/test.txt","esp32","esp32")
 net.scp.get("idea-envi.cz",21,"~/wwwroot/pari/mon.css","/mon.css","idea-envi","")
 
 res, header, body = net.curl.get("http://www.idea-envi.cz/pari/", "mon.css")
+
+-- program WinSCP (Total Commander)
+-- program SolarWinds SFTP/SCP Server
