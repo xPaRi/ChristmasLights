@@ -225,8 +225,9 @@ m.SetValuesCount = function (menuList)
     end
 end
 
--- 
-m.Refresh()
+-- Aktualizace
+m.Refresh = function()
+
 end
 
 -- Inicializace celeho menu
