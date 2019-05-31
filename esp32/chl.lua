@@ -1,5 +1,8 @@
 mutex1 = thread.createmutex()
+stop1flag = false
+
 mutex2 = thread.createmutex()
+stop2flag = false
 
 function CreateStarList(neoPixel, count, modul, paramList)
     local creator = require(modul) -- pripojime knihovnu pro tvorbu hvezd
@@ -18,7 +21,7 @@ function CreateStarList(neoPixel, count, modul, paramList)
 end
 
 function Go(list, mutex)
-    while true do
+    while (stop1flag == false) do
         mutex:lock()
 
         for i, obj in ipairs(list) do
@@ -28,36 +31,33 @@ function Go(list, mutex)
         list.Update()
         
         mutex:unlock()
-
-        thread.sleepms(1)
     end
+
+    print("finish")
 end
 
 function ChannelStop(channel)
+    print("1")
     if (channel == 1 and TH1 ~= nil) then
-        print("mutext1 locking...")
+        print("2")
         mutex1:lock()
-        print("mutext1 locked.")
-
-        print("set crestor = nil")
-        creator = nil
-        print("set crestor is nil")
-
-        print("TH1 suspending...")
-        thread.suspend(TH1)
-        print("TH1 suspended...")
-
-        print("TH1 stoping...")
-        thread.stop(TH1)
-        print("TH1 stoped.")
-
-        print("mutext1 unlocking...")
+        print("3")
+        stop1flag = true
+        print("4")
         mutex1:unlock()
-        print("mutext1 unlocked.")
+        print("5")
 
-        print("Setting TH1 = nil...")
+        mutex1:lock()
+        print("6")
+        thread.stop(TH1)
+        print("7")
         TH1=nil
-        print("Setting TH1 is nil.")
+        print("8")
+        stop1flag = false
+        print("9")
+        mutex1:unlock()
+        print("10")
+
     elseif (channel == 2 and TH2 ~= nil) then
         mutex2:lock()
         thread.stop(TH2)
@@ -73,12 +73,12 @@ function ChannelStart(channel, modulName)
         ParamList_1 = {A = 10, B = 0, C = 0}
         StarList_1 = CreateStarList(NeoPixel_1, STAR_COUNT_1, modulName, ParamList_1) 
 
-        TH1 = thread.start(function() Go(StarList_1, mutex1) end, 4096, 20, 0, "modul: "..modulName)
+        TH1 = thread.start(function() Go(StarList_1, mutex1) end, 4096, 20, 1, "modul: "..modulName)
     elseif (channel == 2) then
         ParamList_2 = {A = 0, B = 20, C = 20}
         StarList_2 = CreateStarList(NeoPixel_2, STAR_COUNT_2, modulName, ParamList_2) 
 
-        TH2 = thread.start(function() Go(StarList_2, mutex2) end, 4096, 20, 0, "neo_channel_2")
+        TH2 = thread.start(function() Go(StarList_2, mutex2) end, 4096, 20, 1, "neo_channel_2")
     end
 
     thread.list()
@@ -130,7 +130,7 @@ NeoPixel_2 = neopixel.attach(neopixel.WS2812B, pio.GPIO14, STAR_COUNT_2)
 
 print("Cajk!")
 
-while true do ChannelStart(1,"eff_3") thread.sleepms(100) ChannelStart(1,"eff_4") thread.sleepms(100) ChannelStart(1,"eff_5") end
+--while true do ChannelStart(1,"eff_3") thread.sleepms(100) ChannelStart(1,"eff_4") thread.sleepms(100) ChannelStart(1,"eff_5") end
 
 --[[
 ChannelStart(1,"eff_3")
