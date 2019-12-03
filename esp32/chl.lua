@@ -65,6 +65,7 @@ function ChannelStop(channel)
         TH2=nil
     end
 end
+dofile("menu.lua")
 
 function ChannelStart(channel, modulName)
     ChannelStop(channel)
@@ -121,16 +122,19 @@ Menu = require("menu") -- pripojime knihovnu pro praci s menu
 Menu.Init(pio.GPIO34, pio.GPIO35, pio.GPIO32, MenuList)
 --
 
-STAR_COUNT_1 = 20 -- Pocet hvezd
+STAR_COUNT_1 = 11 -- Pocet hvezd (11)
 NeoPixel_1 = neopixel.attach(neopixel.WS2812B, pio.GPIO12, STAR_COUNT_1)
 
-STAR_COUNT_2 = 3 -- Pocet hvezd
-NeoPixel_2 = neopixel.attach(neopixel.WS2812B, pio.GPIO14, STAR_COUNT_2)
+--STAR_COUNT_2 = 3 -- Pocet hvezd
+--NeoPixel_2 = neopixel.attach(neopixel.WS2812B, pio.GPIO14, STAR_COUNT_2)
 
 
 print("Cajk!")
 
-while true do ChannelStart(1,"eff_3") thread.sleepms(100) ChannelStart(1,"eff_4") thread.sleepms(100) ChannelStart(1,"eff_5") end
+ChannelStart(1,"eff_2") --blikani
+--ChannelStart(2,"eff_1")
+
+--while true do ChannelStart(1,"eff_3") thread.sleepms(100) ChannelStart(1,"eff_4") thread.sleepms(100) ChannelStart(1,"eff_5") end
 
 --[[
 ChannelStart(1,"eff_3")
